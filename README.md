@@ -31,6 +31,57 @@ Sample/
 
 ---
 
+## Setting up MySQL (with and without Docker)
+
+You can set up the MySQL database required for this project using either Docker (recommended for simplicity) or by installing MySQL directly on your system.
+
+### Using Docker (Recommended)
+
+1. Ensure Docker and Docker Compose are installed on your machine.
+2. From the `Sample/` directory, run:
+   ```sh
+docker-compose up -d
+   ```
+   - This will start a MySQL 8.0 container and initialize the schema using the scripts in `mysql-init/`.
+3. To connect to the running MySQL instance:
+   ```sh
+docker exec -it hospital-mysql mysql -uhospitaluser -phospitalpass hospitaldb
+   ```
+
+### Without Docker (Manual Installation)
+
+1. **Install MySQL Server:**
+   - On Ubuntu/Debian:
+     ```sh
+sudo apt update
+sudo apt install mysql-server
+     ```
+   - On macOS (with Homebrew):
+     ```sh
+brew install mysql
+     ```
+   - On Windows: Download and install from [MySQL Downloads](https://dev.mysql.com/downloads/installer/).
+2. **Start MySQL Service:**
+   - On Linux/macOS:
+     ```sh
+sudo service mysql start
+     ```
+   - On Windows: Start the MySQL service from the Services app or the MySQL installer.
+3. **Create Database and User:**
+   ```sql
+CREATE DATABASE hospitaldb;
+CREATE USER 'hospitaluser'@'localhost' IDENTIFIED BY 'hospitalpass';
+GRANT ALL PRIVILEGES ON hospitaldb.* TO 'hospitaluser'@'localhost';
+FLUSH PRIVILEGES;
+   ```
+4. **Initialize Schema:**
+   - Run the schema SQL script provided in `mysql-init/init.sql`:
+     ```sh
+mysql -uhospitaluser -phospitalpass hospitaldb < mysql-init/init.sql
+     ```
+
+---
+
 ## Quick Start Instructions
 
 ### 1. Start MySQL Database with Docker
