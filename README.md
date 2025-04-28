@@ -1,3 +1,6 @@
+
+---
+
 # Hospital Management System
 
 A simple Java-based Hospital Management System following OOP, JDBC, and custom exception handling.
@@ -39,45 +42,48 @@ You can set up the MySQL database required for this project using either Docker 
 
 1. Ensure Docker and Docker Compose are installed on your machine.
 2. From the `Sample/` directory, run:
-   ```sh
-docker-compose up -d
+   ```bash
+   docker-compose up -d
    ```
    - This will start a MySQL 8.0 container and initialize the schema using the scripts in `mysql-init/`.
 3. To connect to the running MySQL instance:
-   ```sh
-docker exec -it hospital-mysql mysql -uhospitaluser -phospitalpass hospitaldb
+   ```bash
+   docker exec -it hospital-mysql mysql -uhospitaluser -phospitalpass hospitaldb
    ```
 
 ### Without Docker (Manual Installation)
 
 1. **Install MySQL Server:**
    - On Ubuntu/Debian:
-     ```sh
-sudo apt update
-sudo apt install mysql-server
+     ```bash
+     sudo apt update
+     sudo apt install mysql-server
      ```
    - On macOS (with Homebrew):
-     ```sh
-brew install mysql
+     ```bash
+     brew install mysql
      ```
    - On Windows: Download and install from [MySQL Downloads](https://dev.mysql.com/downloads/installer/).
+
 2. **Start MySQL Service:**
    - On Linux/macOS:
-     ```sh
-sudo service mysql start
+     ```bash
+     sudo service mysql start
      ```
    - On Windows: Start the MySQL service from the Services app or the MySQL installer.
+
 3. **Create Database and User:**
    ```sql
-CREATE DATABASE hospitaldb;
-CREATE USER 'hospitaluser'@'localhost' IDENTIFIED BY 'hospitalpass';
-GRANT ALL PRIVILEGES ON hospitaldb.* TO 'hospitaluser'@'localhost';
-FLUSH PRIVILEGES;
+   CREATE DATABASE hospitaldb;
+   CREATE USER 'hospitaluser'@'localhost' IDENTIFIED BY 'hospitalpass';
+   GRANT ALL PRIVILEGES ON hospitaldb.* TO 'hospitaluser'@'localhost';
+   FLUSH PRIVILEGES;
    ```
+
 4. **Initialize Schema:**
    - Run the schema SQL script provided in `mysql-init/init.sql`:
-     ```sh
-mysql -uhospitaluser -phospitalpass hospitaldb < mysql-init/init.sql
+     ```bash
+     mysql -uhospitaluser -phospitalpass hospitaldb < mysql-init/init.sql
      ```
 
 ---
@@ -87,7 +93,7 @@ mysql -uhospitaluser -phospitalpass hospitaldb < mysql-init/init.sql
 ### 1. Start MySQL Database with Docker
 
 From the `Sample/` directory, run:
-```sh
+```bash
 docker-compose up -d
 ```
 - This will start a MySQL 8.0 container and initialize the schema.
@@ -95,7 +101,7 @@ docker-compose up -d
 ### 2. Insert Dummy Data (Required for Testing)
 
 Open a MySQL shell in the running container:
-```sh
+```bash
 docker exec -it hospital-mysql mysql -uhospitaluser -phospitalpass hospitaldb
 ```
 Paste the following SQL to insert a patient and a doctor:
@@ -109,7 +115,7 @@ VALUES ('Alice', 'Smith', 'General', '0987654321');
 
 ### 3. Build and Run the Java Application
 
-```sh
+```bash
 mvn clean compile exec:java -Dexec.mainClass=main.MainModule
 ```
 - The menu will appear in your terminal.
@@ -144,11 +150,15 @@ Enter choice: 0
 ## Troubleshooting
 - **Foreign Key Constraint Error:** Make sure the Patient and Doctor IDs exist in the database.
 - **Date Error:** Use a valid date (e.g., `2025-11-24`).
-- **JDBC Driver Error:** Ensure Maven downloads dependencies, or run `mvn dependency:resolve`.
+- **JDBC Driver Error:** Ensure Maven downloads dependencies, or run:
+  ```bash
+  mvn dependency:resolve
+  ```
 
 ---
 
 ## Database Schema (for reference)
+
 ```sql
 CREATE TABLE Patient (
     patientId INT PRIMARY KEY AUTO_INCREMENT,
@@ -182,4 +192,5 @@ CREATE TABLE Appointment (
 ---
 
 ## Authors
-- Your Name / Team
+- Makarand Milind Hinge
+
