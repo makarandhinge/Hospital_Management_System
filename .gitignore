@@ -1,0 +1,9 @@
+*.class
+*.log
+.idea/
+*.iml
+.DS_Store
+*.swp
+*.bak
+*.tmp
+out/
